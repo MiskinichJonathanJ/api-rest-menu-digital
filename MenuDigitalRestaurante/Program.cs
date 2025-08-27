@@ -1,4 +1,9 @@
+using Application.Interfaces;
+using Application.Mappers;
+using Application.UseCase.DishUse;
+using Infrastructure.Command;
 using Infrastructure.Persistence;
+using Infrastructure.Querys;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
@@ -12,9 +17,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Custom
-var connectionString = builder.Configuration["MenuDigiltalConnection"];
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString(connectionString)));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("MenuDigiltalConnection")));
+
+builder.Services.AddScoped<IDishServices, DishServices>();
+builder.Services.AddScoped<IDishCommand, DishCommand>();
+builder.Services.AddScoped<IDishQuery, DishQuery>();
+builder.Services.AddScoped<IDishMapper, DishMapper>();
 
 var app = builder.Build();
 
