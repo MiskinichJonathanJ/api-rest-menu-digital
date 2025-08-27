@@ -10,7 +10,7 @@ namespace Application.Interfaces
 {
     public interface IDishMapper
     {
-        Dish ToEntity(CreateDishRequest request);
+        Dish ToEntity(CreateDishRequest request, Category category);
         DishResponse ToResponse(Dish dish);
     }
 }

@@ -11,5 +11,6 @@ namespace Application.Interfaces
     {
         Task<ICollection<Dish>> GetAllDish();
         Task<Dish> GetDishById(int dishId);
+        Category GetCategoryById(int id);
     }
 }
