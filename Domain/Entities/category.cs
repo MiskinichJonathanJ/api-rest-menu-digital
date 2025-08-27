@@ -1,4 +1,4 @@
-namespace MenuDigitalRestaurante.Entities
+namespace Domain.Entities
 {
     public class Category
     {
