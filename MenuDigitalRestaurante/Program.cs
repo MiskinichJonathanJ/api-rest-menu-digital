@@ -12,9 +12,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Custom
-var connectionString = builder.Configuration["MenuDigiltalConnection"];
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString(connectionString)));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("MenuDigiltalConnection")));
 
 var app = builder.Build();
 
