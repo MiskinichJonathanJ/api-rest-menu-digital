@@ -11,22 +11,20 @@ namespace Application.Mappers
 {
     public class DishMapper : IDishMapper
     {
-        public Dish ToEntity(CreateDishRequest request)
+        public Dish ToEntity(CreateDishRequest request, Category category)
         {
             var dish = new Dish
             {
                 Name = request.DishName,
                 Description = request.DishDescription,
                 Price = request.DishPrice,
-                IsAvailable = request.DishIsAvailable,
-                CategoryNav = new Category
-                {
-                    Name = request.CategoryName,
-                    Description = request.CategoryDescription,
-                    Order = request.CategoryOrder
-                }
+                IsAvailable = true,
+                ImageURL = request.ImageUrl,
+                CategoryId = category.Id,
+                CategoryNav = category,
+                CreatedDate = DateTime.UtcNow,
+                UpdatedDate = DateTime.UtcNow
             };
-
             return dish;
         }
 
@@ -34,15 +32,18 @@ namespace Application.Mappers
         {
             var dishResponse = new DishResponse
             {
+                ID = dish.ID,
                 DishName = dish.Name,
                 DishDescription = dish.Description,
                 DishPrice = dish.Price,
                 DishIsAvailable = dish.IsAvailable,
-                DishCategory = new CategoryResponse
+                DishImageURL = dish.ImageURL,
+                DishCreatedDate = dish.CreatedDate,
+                DishUpdatedDate = dish.UpdatedDate,
+                category = new CategoryResponse
                 {
-                    CategoryDescription = dish.CategoryNav.Description,
-                    CategoryName = dish.CategoryNav.Name,
-                    CategoryOrder = dish.CategoryNav.Order
+                    CategoryId = dish.CategoryNav.Id,
+                    CategoryName = dish.CategoryNav.Name
                 }
             };
 
