@@ -21,5 +21,44 @@ namespace Infrastructure.Persistence
         : base(options) 
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Dish>(entity =>
+            {
+                entity.HasKey(d => d.ID);
+                entity.Property(d => d.ID).ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<Category>(entity =>
+            {
+                entity.HasKey(c => c.Id);
+                entity.Property(c => c.Id).ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<DeliveryType>(entity =>
+            {
+                entity.HasKey(d => d.ID);
+                entity.Property(d => d.ID).ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.HasKey(o => o.Id);
+                entity.Property(o => o.Id).ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<OrderItem>(entity =>
+            {
+                entity.HasKey(o => o.Id);
+                entity.Property(o => o.Id).ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<Status>(entity =>
+            {
+                entity.HasKey(s => s.ID);
+                entity.Property(s => s.ID).ValueGeneratedOnAdd();
+            });
+        }
     }
 }
