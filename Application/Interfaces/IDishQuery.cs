@@ -10,7 +10,7 @@ namespace Application.Interfaces
     public interface IDishQuery
     {
         Task<ICollection<Dish>> GetAllDish();
-        Task<Dish> GetDishById(int dishId);
-        Category GetCategoryById(int id);
+        Task<Dish> GetDishById(Guid dishId);
+        Task<Category> GetCategoryById(int id);
     }
 }

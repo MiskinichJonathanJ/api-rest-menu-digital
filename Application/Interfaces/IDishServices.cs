@@ -14,7 +14,7 @@ namespace Application.Interfaces
         Task DeleteDish(int id);
         Task<ICollection<DishResponse>> GetAllDish();
         Task<Dish> GetDishById(int id);
-        Task UpdateDish(int id, Dish dish);
+        Task<DishResponse> UpdateDish(Guid id, DishRequest request);
 
     }
 }
