@@ -28,10 +28,16 @@ namespace Infrastructure.Persistence
             {
                 entity.HasKey(d => d.ID);
                 entity.Property(d => d.ID).ValueGeneratedOnAdd();
-                entity.Property(d  =>  d.Name).HasColumnType("varchar(255)");
+                entity.Property(d => d.Name).HasColumnType("varchar(255)");
                 entity.Property(d => d.Price).HasColumnType("decimal");
                 entity.Property(d => d.Description).HasColumnType("text");
                 entity.Property(d => d.ImageURL).HasColumnType("text");
+
+                entity.HasOne(d => d.CategoryNav)
+                    .WithMany(c => c.Dishes)
+                    .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
             });
 
             modelBuilder.Entity<Category>(entity =>
@@ -56,6 +62,18 @@ namespace Infrastructure.Persistence
                 entity.Property(o => o.DeliveryTo).HasColumnType("varchar(255)");
                 entity.Property(o => o.Notes).HasColumnType("text");
                 entity.Property(d => d.Price).HasColumnType("decimal");
+
+                entity.HasOne(o =>o.DeliveryTypeNav)
+                        .WithMany(d => d.OrdersNav)
+                        .HasForeignKey(o => o.DeliveryTypeID)
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                entity.HasOne(o => o.StatusNav)
+                    .WithMany(s => s.OrdersNav)
+                    .HasForeignKey(d => d.OverallStatusID)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
             });
 
             modelBuilder.Entity<OrderItem>(entity =>
@@ -63,6 +81,24 @@ namespace Infrastructure.Persistence
                 entity.HasKey(o => o.Id);
                 entity.Property(o => o.Id).ValueGeneratedOnAdd();
                 entity.Property(o => o.Notes).HasColumnType("text");
+
+                entity.HasOne(o => o.DishNav)
+                        .WithMany()
+                        .HasForeignKey(o => o.DishId)
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                entity.HasOne(o => o.OrderNav)
+                    .WithMany(ord => ord.Items)
+                    .HasForeignKey(o => o.OrderId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
+
+                entity.HasOne(o => o.Status)
+                    .WithMany(s => s.OrderItemsNav)
+                    .HasForeignKey(o => o.StatusId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
             });
 
             modelBuilder.Entity<Status>(entity =>

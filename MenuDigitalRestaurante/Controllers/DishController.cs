@@ -35,5 +35,11 @@ namespace MenuDigitalRestaurante.Controllers
             return Ok(result);
         }
 
+        [HttpPut]
+        public async Task<IActionResult> UpdateDish()
+        {
+            return Ok();
+        }
+
     }
 }
