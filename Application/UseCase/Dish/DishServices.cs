@@ -36,9 +36,10 @@ namespace Application.UseCase.DishUse
             throw new NotImplementedException();
         }
 
-        public Task<ICollection<Dish>> GetAllDish()
+        public async Task<ICollection<DishResponse>> GetAllDish()
         {
-            throw new NotImplementedException();
+            var  result = await _query.GetAllDish();
+            return result.Select(d => _mapper.ToResponse(d)).ToList();
         }
 
         public Task<Dish> GetDishById(int id)

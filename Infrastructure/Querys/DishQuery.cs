@@ -18,9 +18,9 @@ namespace Infrastructure.Querys
         {
             _context = context;
         }
-        public Task<ICollection<Dish>> GetAllDish()
+        public async Task<ICollection<Dish>> GetAllDish()
         {
-            throw new NotImplementedException();
+            return await _context.Dishes.Include(d  => d.CategoryNav).ToListAsync();
         }
 
         public Task<Dish> GetDishById(int dishId)
