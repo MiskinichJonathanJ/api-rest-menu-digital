@@ -13,7 +13,7 @@ namespace Domain.Entities
         public int OrderId { get; set; }
         public Order OrderNav { get; set; }
 
-        public int DishId { get; set; }
+        public Guid DishId { get; set; }
         public Dish DishNav { get; set; }
     }
 }

@@ -27,7 +27,9 @@ namespace Infrastructure.Persistence
             modelBuilder.Entity<Dish>(entity =>
             {
                 entity.HasKey(d => d.ID);
-                entity.Property(d => d.ID).ValueGeneratedOnAdd();
+                entity.Property(d => d.ID)
+                    .HasColumnType("uuid")
+                    .HasDefaultValueSql("uuid_generate_v4()");
                 entity.Property(d => d.Name).HasColumnType("varchar(255)");
                 entity.Property(d => d.Price).HasColumnType("decimal");
                 entity.Property(d => d.Description).HasColumnType("text");
