@@ -19,8 +19,16 @@ namespace MenuDigitalRestaurante.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateDish(CreateDishRequest request)
         {
-            var result = await _services.CreateDish(request, 1);
+            var result = await _services.CreateDish(request, request.CategoryId);
             return new JsonResult(result);
         }
+
+        [HttpGet]
+        public  async Task<IActionResult>  GetAll()
+        {
+            var result = await _services.GetAllDish();
+            return Ok(result);
+        }
+
     }
 }

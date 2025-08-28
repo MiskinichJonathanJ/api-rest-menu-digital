@@ -12,7 +12,7 @@ namespace Application.Interfaces
     {
         Task<DishResponse> CreateDish(CreateDishRequest request, int category);
         Task DeleteDish(int id);
-        Task<ICollection<Dish>> GetAllDish();
+        Task<ICollection<DishResponse>> GetAllDish();
         Task<Dish> GetDishById(int id);
         Task UpdateDish(int id, Dish dish);
 
