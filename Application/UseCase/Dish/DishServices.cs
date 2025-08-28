@@ -25,12 +25,12 @@ namespace Application.UseCase.DishUse
 
         public async Task<DishResponse> CreateDish(DishRequest request, int  id)
         {
-            var category = _query.GetCategoryById(id);
+            var category = await _query.GetCategoryById(id);
             var dish = _mapper.ToEntity(request, category);
             await _command.CreateDish(dish);
             return _mapper.ToResponse(dish);
         } 
-
+        
         public Task DeleteDish(int id)
         {
             throw new NotImplementedException();
@@ -47,9 +47,19 @@ namespace Application.UseCase.DishUse
             throw new NotImplementedException();
         }
 
-        public Task UpdateDish(int id, Dish dish)
+        public async Task<DishResponse> UpdateDish(Guid id, DishRequest request)
         {
-            throw new NotImplementedException();
+            var  dish = await _query.GetDishById(id);
+
+            if  (dish == null)
+                throw new Exception("Plato no encontrado");
+
+            var category = await _query.GetCategoryById(request.CategoryId);
+            var entityUpdated = _mapper.ToEntity(request,category);
+
+           await _command.UpdateDish(dish, entityUpdated);
+            
+            return _mapper.ToResponse(dish);
         }
     }
 }
