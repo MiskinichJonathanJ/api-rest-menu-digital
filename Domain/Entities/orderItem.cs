@@ -5,6 +5,7 @@ namespace Domain.Entities
         public int Id { get; set; }
         public int Quantity { get; set; }
         public  string  Notes { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         public  int StatusId { get; set; }
         public Status Status { get; set; }
