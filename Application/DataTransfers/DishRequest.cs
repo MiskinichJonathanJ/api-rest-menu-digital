@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.DataTransfers
 {
-    public class CreateDishRequest
+    public class DishRequest
     {
         public string DishName { get; set; }
         public string DishDescription { get; set; }

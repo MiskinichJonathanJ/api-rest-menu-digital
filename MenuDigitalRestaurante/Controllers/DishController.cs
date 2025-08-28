@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MenuDigitalRestaurante.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class DishController : ControllerBase
     {
@@ -16,8 +16,13 @@ namespace MenuDigitalRestaurante.Controllers
             _services = services;
         }
 
+        /// <summary>
+        /// Crear un nuevo plato.
+        /// </summary>
+        /// <param name="request">Datos del plato crear</param>
+        /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateDish(CreateDishRequest request)
+        public async Task<IActionResult> CreateDish(DishRequest request)
         {
             var result = await _services.CreateDish(request, request.CategoryId);
             return new JsonResult(result);
@@ -28,6 +33,12 @@ namespace MenuDigitalRestaurante.Controllers
         {
             var result = await _services.GetAllDish();
             return Ok(result);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateDish()
+        {
+            return Ok();
         }
 
     }

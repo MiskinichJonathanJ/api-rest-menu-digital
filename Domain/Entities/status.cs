@@ -5,5 +5,6 @@ namespace Domain.Entities
         public int ID { get; set; }
         public string Name { get; set; }
         public ICollection<Order> OrdersNav { get; set; }
+        public ICollection<OrderItem> OrderItemsNav { get; set; }
     }
 }

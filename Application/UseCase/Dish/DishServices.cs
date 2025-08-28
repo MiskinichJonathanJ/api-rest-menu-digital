@@ -23,7 +23,7 @@ namespace Application.UseCase.DishUse
             _mapper = mapper;
         }
 
-        public async Task<DishResponse> CreateDish(CreateDishRequest request, int  id)
+        public async Task<DishResponse> CreateDish(DishRequest request, int  id)
         {
             var category = _query.GetCategoryById(id);
             var dish = _mapper.ToEntity(request, category);

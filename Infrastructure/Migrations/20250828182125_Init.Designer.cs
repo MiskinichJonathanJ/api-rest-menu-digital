@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250827223839_Agregar-ImageURL")]
-    partial class AgregarImageURL
+    [Migration("20250828182125_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,11 +35,11 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(25)");
 
                     b.Property<int>("Order")
                         .HasColumnType("integer");
@@ -59,7 +59,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(25)");
 
                     b.HasKey("ID");
 
@@ -68,11 +68,10 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Dish", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("uuid_generate_v4()");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("integer");
@@ -93,10 +92,10 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
+                        .HasColumnType("decimal");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("timestamp with time zone");
@@ -121,7 +120,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("DeliveryTo")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("DeliveryTypeID")
                         .HasColumnType("integer");
@@ -134,10 +133,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
-                    b.Property<int>("StatusNavID")
-                        .HasColumnType("integer");
+                        .HasColumnType("decimal");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("timestamp with time zone");
@@ -146,7 +142,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("DeliveryTypeID");
 
-                    b.HasIndex("StatusNavID");
+                    b.HasIndex("OverallStatusID");
 
                     b.ToTable("Orders");
                 });
@@ -159,8 +155,11 @@ namespace Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DishId")
-                        .HasColumnType("integer");
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("DishId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Notes")
                         .IsRequired()
@@ -196,7 +195,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(25)");
 
                     b.HasKey("ID");
 
@@ -208,7 +207,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Category", "CategoryNav")
                         .WithMany("Dishes")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("CategoryNav");
@@ -219,13 +218,13 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.DeliveryType", "DeliveryTypeNav")
                         .WithMany("OrdersNav")
                         .HasForeignKey("DeliveryTypeID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Status", "StatusNav")
                         .WithMany("OrdersNav")
-                        .HasForeignKey("StatusNavID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("OverallStatusID")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("DeliveryTypeNav");
@@ -238,19 +237,19 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Dish", "DishNav")
                         .WithMany()
                         .HasForeignKey("DishId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Order", "OrderNav")
                         .WithMany("Items")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Status", "Status")
-                        .WithMany()
+                        .WithMany("OrderItemsNav")
                         .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("DishNav");
@@ -277,6 +276,8 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Status", b =>
                 {
+                    b.Navigation("OrderItemsNav");
+
                     b.Navigation("OrdersNav");
                 });
 #pragma warning restore 612, 618

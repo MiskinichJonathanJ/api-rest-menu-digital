@@ -9,7 +9,7 @@ namespace Application.DataTransfers
 {
     public class DishResponse
     {
-        public int ID { get; set; }
+        public Guid ID { get; set; }
         public string DishName { get; set; }
         public string DishDescription { get; set; }
         public decimal DishPrice { get; set; }
