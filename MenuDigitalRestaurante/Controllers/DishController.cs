@@ -35,10 +35,11 @@ namespace MenuDigitalRestaurante.Controllers
             return Ok(result);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateDish()
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateDish(Guid id, DishRequest request)
         {
-            return Ok();
+            var result = await _services.UpdateDish(id, request);
+            return Ok(result);
         }
 
     }
