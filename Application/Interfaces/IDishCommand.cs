@@ -11,5 +11,6 @@ namespace Application.Interfaces
     {
         Task CreateDish(Dish dish);
         Task DeleteDish(int id);
+        Task UpdateDish(Dish dishEnDB, Dish dishActualizado);
     }
 }

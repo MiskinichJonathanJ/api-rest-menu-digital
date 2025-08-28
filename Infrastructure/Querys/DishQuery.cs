@@ -23,14 +23,14 @@ namespace Infrastructure.Querys
             return await _context.Dishes.Include(d  => d.CategoryNav).ToListAsync();
         }
 
-        public Task<Dish> GetDishById(int dishId)
+        public async Task<Dish> GetDishById(Guid dishId)
         {
-            throw new NotImplementedException();
+            return await _context.Dishes.FirstOrDefaultAsync(d=> d.ID == dishId);
         }
 
-        public Category GetCategoryById(int id)
+        public async Task<Category> GetCategoryById(int id)
         {
-            return   _context.Categories.FirstOrDefault(c => c.Id == id);
+            return await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
         }
     }
 }

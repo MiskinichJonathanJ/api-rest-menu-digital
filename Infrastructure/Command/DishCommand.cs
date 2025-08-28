@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Infrastructure.Command
 {
@@ -28,6 +29,22 @@ namespace Infrastructure.Command
         public Task DeleteDish(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public async  Task UpdateDish(Dish dishEnDB, Dish dishActualizado)
+        { 
+            dishEnDB.Name = dishActualizado.Name;
+            dishEnDB.Description = dishActualizado.Description;
+            dishEnDB.Price = dishActualizado.Price;
+            if (dishEnDB.CategoryId != dishActualizado.CategoryId)
+            {
+                dishEnDB.CategoryId = dishActualizado.CategoryId;
+                dishEnDB.CategoryNav = dishActualizado.CategoryNav;
+            }
+            dishEnDB.ImageURL = dishActualizado.ImageURL;
+            dishEnDB.UpdatedDate = DateTime.UtcNow;
+
+            await _context.SaveChangesAsync();
         }
     }
 }
