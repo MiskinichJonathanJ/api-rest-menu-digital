@@ -11,7 +11,7 @@ namespace Application.Mappers
 {
     public class DishMapper : IDishMapper
     {
-        public Dish ToEntity(CreateDishRequest request, Category category)
+        public Dish ToEntity(DishRequest request, Category category)
         {
             var dish = new Dish
             {

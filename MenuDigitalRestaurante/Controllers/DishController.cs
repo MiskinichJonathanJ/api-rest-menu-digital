@@ -22,7 +22,7 @@ namespace MenuDigitalRestaurante.Controllers
         /// <param name="request">Datos del plato crear</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateDish(CreateDishRequest request)
+        public async Task<IActionResult> CreateDish(DishRequest request)
         {
             var result = await _services.CreateDish(request, request.CategoryId);
             return new JsonResult(result);
