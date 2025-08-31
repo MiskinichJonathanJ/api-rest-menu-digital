@@ -18,17 +18,43 @@ namespace Infrastructure.Querys
         {
             _context = context;
         }
-        public async Task<ICollection<Dish>> GetAllDish()
+        public async Task<ICollection<Dish>> GetAllDish(
+            string? name = null,
+            int? categoryId = null,
+            bool onlyActive = true,
+            string? sortByPrice = null
+        )
         {
-            return await _context.Dishes.Include(d  => d.CategoryNav).ToListAsync();
+            IQueryable<Dish> query = _context.Dishes;
+            
+            if (!string.IsNullOrEmpty(name))
+                query = query.Where(d => d.Name.Contains(name));
+            
+            if(categoryId.HasValue)
+                query = query.Where(d => d.CategoryId == categoryId);
+
+            if(onlyActive)
+                query = query.Where(d => d.IsAvailable);
+            
+            if (!string.IsNullOrEmpty(sortByPrice))
+            {
+                query = sortByPrice.ToLower() switch
+                {
+                    "asc" => query.OrderBy(d => d.Price),
+                    "desc" => query.OrderByDescending(d => d.Price),
+                    _ => throw new ArgumentException("Invalid sortByPrice parameter")
+                };
+            }
+            
+            return await query.ToListAsync();
         }
 
-        public async Task<Dish> GetDishById(Guid dishId)
+        public async Task<Dish?> GetDishById(Guid dishId)
         {
             return await _context.Dishes.FirstOrDefaultAsync(d=> d.ID == dishId);
         }
 
-        public async Task<Category> GetCategoryById(int id)
+        public async Task<Category?> GetCategoryById(int id)
         {
             return await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
         }

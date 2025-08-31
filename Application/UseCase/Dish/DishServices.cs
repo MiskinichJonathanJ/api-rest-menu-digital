@@ -37,9 +37,14 @@ namespace Application.UseCase.DishUse
             throw new NotImplementedException();
         }
 
-        public async Task<ICollection<DishResponse>> GetAllDish()
+        public async Task<ICollection<DishResponse>> GetAllDish(
+            string? name = null,
+            int? categoryId = null,
+            bool onlyActive = true,
+            string? sortByPrice = null
+        )
         {
-            var  result = await _query.GetAllDish();
+            var  result = await _query.GetAllDish(name,  categoryId,  onlyActive,  sortByPrice);
             return result.Select(d => _mapper.ToResponse(d)).ToList();
         }
 

@@ -29,9 +29,14 @@ namespace MenuDigitalRestaurante.Controllers
         }
 
         [HttpGet]
-        public  async Task<IActionResult>  GetAll()
+        public  async Task<IActionResult>  GetAll(
+            [FromQuery] string? name,
+            [FromQuery] int? category,
+            [FromQuery] bool onlyActive = true,
+            [FromQuery] string? sortByPrice = null
+        )
         {
-            var result = await _services.GetAllDish();
+            var result = await _services.GetAllDish(name, category, onlyActive, sortByPrice);
             return Ok(result);
         }
 
