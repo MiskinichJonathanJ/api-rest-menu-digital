@@ -1,4 +1,5 @@
-﻿using Application.DataTransfers;
+﻿using Application.DataTransfers.Request;
+using Application.DataTransfers.Response;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;

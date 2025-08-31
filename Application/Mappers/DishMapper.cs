@@ -1,4 +1,5 @@
-﻿using Application.DataTransfers;
+﻿using Application.DataTransfers.Response;
+using Application.DataTransfers.Request;
 using Application.Interfaces;
 using Domain.Entities;
 using System;
