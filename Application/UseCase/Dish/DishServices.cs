@@ -1,5 +1,4 @@
-﻿using Application.DataTransfers;
-using Application.Interfaces;
+﻿using Application.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Domain.Entities;
+using Application.DataTransfers.Request;
+using Application.DataTransfers.Response;
 
 namespace Application.UseCase.DishUse
 {

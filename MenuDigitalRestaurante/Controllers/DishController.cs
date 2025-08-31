@@ -1,4 +1,4 @@
-﻿using Application.DataTransfers;
+﻿using Application.DataTransfers.Request;
 using Application.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
