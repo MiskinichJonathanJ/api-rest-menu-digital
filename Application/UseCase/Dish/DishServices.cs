@@ -26,16 +26,16 @@ namespace Application.UseCase.DishUse
             _validator = validator;
         }
 
-        public async Task<DishResponse> CreateDish(DishRequest request, int  id)
+        public async Task<DishResponse> CreateDish(DishRequest request)
         {
-            _validator.ValidateCreate(request);
+            await _validator.ValidateCreate(request);
 
-            var category = await _query.GetCategoryById(id);
+            var category = await _query.GetCategoryById(request.CategoryId);
             var dish = _mapper.ToEntity(request, category);
 
             await _command.CreateDish(dish);
             return _mapper.ToResponse(dish);
-        } 
+        }
         
         public Task DeleteDish(int id)
         {
@@ -60,7 +60,7 @@ namespace Application.UseCase.DishUse
 
         public async Task<DishResponse> UpdateDish(Guid id, DishRequest request)
         {
-            _validator.ValidateUpdate(id, request);
+             await _validator.ValidateUpdate(id, request);
             var  dish = await _query.GetDishById(id);
 
             if  (dish == null)

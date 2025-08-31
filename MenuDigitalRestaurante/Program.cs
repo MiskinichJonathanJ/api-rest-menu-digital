@@ -1,4 +1,4 @@
-using Application.Interfaces;
+using Application.Interfaces.DishInterfaces;
 using Application.Mappers;
 using Application.UseCase.DishUse;
 using Application.Validations;

@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Interfaces
+namespace Application.Interfaces.DishInterfaces
 {
     public interface IDishValidator
     {
-        void ValidateCreate(DishRequest request);
-        void ValidateUpdate(Guid idDish,  DishRequest request);
+        Task ValidateCreate(DishRequest request);
+        Task ValidateUpdate(Guid idDish,  DishRequest request);
     }
 }

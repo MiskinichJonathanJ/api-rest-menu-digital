@@ -1,5 +1,5 @@
 ﻿using Application.DataTransfers.Request;
-using Application.Interfaces;
+using Application.Interfaces.DishInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

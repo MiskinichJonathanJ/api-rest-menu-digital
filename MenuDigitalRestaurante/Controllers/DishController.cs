@@ -24,7 +24,7 @@ namespace MenuDigitalRestaurante.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateDish(DishRequest request)
         {
-            var result = await _services.CreateDish(request, request.CategoryId);
+            var result = await _services.CreateDish(request);
             return new JsonResult(result);
         }
 
@@ -46,6 +46,5 @@ namespace MenuDigitalRestaurante.Controllers
             var result = await _services.UpdateDish(id, request);
             return Ok(result);
         }
-
     }
 }
