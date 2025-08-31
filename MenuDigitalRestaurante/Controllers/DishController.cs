@@ -1,5 +1,5 @@
 ﻿using Application.DataTransfers.Request;
-using Application.Interfaces;
+using Application.Interfaces.DishInterfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

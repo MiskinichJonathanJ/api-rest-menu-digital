@@ -12,7 +12,7 @@ namespace Application.Mappers
 {
     public class DishMapper : IDishMapper
     {
-        public Dish ToEntity(DishRequest request, Category category)
+        public Dish ToEntity(DishRequest request)
         {
             var dish = new Dish
             {
@@ -21,8 +21,7 @@ namespace Application.Mappers
                 Price = request.DishPrice,
                 IsAvailable = true,
                 ImageURL = request.ImageUrl,
-                CategoryId = category.Id,
-                CategoryNav = category,
+                CategoryId = request.CategoryId,
                 CreatedDate = DateTime.UtcNow,
                 UpdatedDate = DateTime.UtcNow
             };

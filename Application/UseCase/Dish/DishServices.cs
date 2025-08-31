@@ -1,5 +1,4 @@
-﻿using Application.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +7,7 @@ using System.Threading.Tasks;
 using Domain.Entities;
 using Application.DataTransfers.Request;
 using Application.DataTransfers.Response;
+using Application.Interfaces.DishInterfaces;
 
 namespace Application.UseCase.DishUse
 {
@@ -30,8 +30,7 @@ namespace Application.UseCase.DishUse
         {
             await _validator.ValidateCreate(request);
 
-            var category = await _query.GetCategoryById(request.CategoryId);
-            var dish = _mapper.ToEntity(request, category);
+            var dish = _mapper.ToEntity(request);
 
             await _command.CreateDish(dish);
             return _mapper.ToResponse(dish);
@@ -60,16 +59,12 @@ namespace Application.UseCase.DishUse
 
         public async Task<DishResponse> UpdateDish(Guid id, DishRequest request)
         {
-             await _validator.ValidateUpdate(id, request);
+            await _validator.ValidateUpdate(id, request);
             var  dish = await _query.GetDishById(id);
 
-            if  (dish == null)
-                throw new Exception("Plato no encontrado");
+            var entityUpdated = _mapper.ToEntity(request);
 
-            var category = await _query.GetCategoryById(request.CategoryId);
-            var entityUpdated = _mapper.ToEntity(request,category);
-
-           await _command.UpdateDish(dish, entityUpdated);
+            await _command.UpdateDish(dish, entityUpdated);
             
             return _mapper.ToResponse(dish);
         }
