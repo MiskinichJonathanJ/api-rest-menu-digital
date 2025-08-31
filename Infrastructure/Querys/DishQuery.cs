@@ -25,7 +25,7 @@ namespace Infrastructure.Querys
             string? sortByPrice = null
         )
         {
-            IQueryable<Dish> query = _context.Dishes;
+            IQueryable<Dish> query = _context.Dishes.Include(d =>  d.CategoryNav);
             
             if (!string.IsNullOrEmpty(name))
                 query = query.Where(d => d.Name.Contains(name));
