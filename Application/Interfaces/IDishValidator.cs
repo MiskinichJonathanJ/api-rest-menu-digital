@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    internal interface IDishValidator
+    public interface IDishValidator
     {
         void ValidateCreate(DishRequest request);
-        void ValidateUpdate();
+        void ValidateUpdate(Guid idDish,  DishRequest request);
     }
 }

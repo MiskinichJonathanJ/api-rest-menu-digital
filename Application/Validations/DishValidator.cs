@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Validations
 {
-    internal class DishValidator : IDishValidator
+    public class DishValidator : IDishValidator
     {
         private readonly IDishQuery _query;
 
@@ -17,16 +17,25 @@ namespace Application.Validations
             _query = query;
         }
 
-        public async void ValidateCreate(DishRequest request)
+        public async Task ValidateCreate(DishRequest request)
         {
             var category = await _query.GetCategoryById(request.CategoryId);
             if (category == null)
                 throw new Exception("La categoria no existe");
+
+            var dishConNombre = await _query.GetAllDish(name: request.DishName);
+            if (!dishConNombre.Any())
+                throw new Exception("Ya existe un platillo con ese nombre");
+
+            if (request.DishPrice <= 0)
+                throw new Exception("El precio del platillo debe ser mayor a 0");
         }
 
-        public void ValidateUpdate()
+        public async Task ValidateUpdate(Guid idDish, DishRequest request)
         {
-            throw new NotImplementedException();
+            if(_query.GetDishById(idDish) == null)
+                throw new Exception("El platillo no existe");
+            await  ValidateCreate(request);
         }
     }
 }

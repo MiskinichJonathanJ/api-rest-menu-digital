@@ -16,18 +16,23 @@ namespace Application.UseCase.DishUse
         public readonly IDishCommand _command;
         public readonly IDishQuery _query;
         public readonly IDishMapper _mapper;
+        public readonly IDishValidator _validator;
 
-        public DishServices(IDishCommand command, IDishQuery query, IDishMapper mapper)
+        public DishServices(IDishCommand command, IDishQuery query, IDishMapper mapper, IDishValidator validator)
         {
             _command = command;
             _query = query;
             _mapper = mapper;
+            _validator = validator;
         }
 
         public async Task<DishResponse> CreateDish(DishRequest request, int  id)
         {
+            _validator.ValidateCreate(request);
+
             var category = await _query.GetCategoryById(id);
             var dish = _mapper.ToEntity(request, category);
+
             await _command.CreateDish(dish);
             return _mapper.ToResponse(dish);
         } 
@@ -55,6 +60,7 @@ namespace Application.UseCase.DishUse
 
         public async Task<DishResponse> UpdateDish(Guid id, DishRequest request)
         {
+            _validator.ValidateUpdate(id, request);
             var  dish = await _query.GetDishById(id);
 
             if  (dish == null)
