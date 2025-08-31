@@ -15,9 +15,8 @@ namespace Application.DataTransfers.Response
         public decimal DishPrice { get; set; }
         public bool DishIsAvailable { get; set; }
         public string DishImageURL { get; set; }
-        public CategoryResponse category { get; set; }
+        public GenericResponse category { get; set; }
         public DateTime DishCreatedDate { get; set; }
         public DateTime DishUpdatedDate { get; set; }
-
     }
 }

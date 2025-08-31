@@ -40,10 +40,10 @@ namespace Application.Mappers
                 DishImageURL = dish.ImageURL,
                 DishCreatedDate = dish.CreatedDate,
                 DishUpdatedDate = dish.UpdatedDate,
-                category = new CategoryResponse
+                category = new GenericResponse
                 {
-                    CategoryId = dish.CategoryNav.Id,
-                    CategoryName = dish.CategoryNav.Name
+                    id = dish.CategoryId,
+                    name = dish.CategoryNav.Name
                 }
             };
 
