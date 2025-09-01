@@ -1,4 +1,5 @@
 ﻿using Application.DataTransfers.Request;
+using Application.Exceptions;
 using Application.Interfaces.DishInterfaces;
 using System;
 using System.Collections.Generic;
@@ -21,20 +22,20 @@ namespace Application.Validations
         {
             var category = await _query.GetCategoryById(request.Category);
             if (category == null)
-                throw new Exception("La categoria no existe");
+                throw new CategoryNotFoundException("La categoria no existe");
 
             var dishConNombre = await _query.GetAllDish(name: request.Name);
             if (dishConNombre.Any())
-                throw new Exception("Ya existe un platillo con ese nombre");
+                throw new DishNameAlreadyExistsException("Ya existe un platillo con ese nombre");
 
             if (request.Price <= 0)
-                throw new Exception("El precio del platillo debe ser mayor a 0");
+                throw new InvalidDishPriceException("El precio del platillo debe ser mayor a 0");
         }
 
         public async Task ValidateUpdate(Guid idDish, DishRequest request)
         {
             if(_query.GetDishById(idDish) == null)
-                throw new Exception("El platillo no existe");
+                throw new DishNotFoundException("El platillo no existe");
             await  ValidateCreate(request);
         }
     }

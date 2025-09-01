@@ -7,6 +7,7 @@ using Infrastructure.Command;
 using Infrastructure.Persistence;
 using Infrastructure.Querys;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +30,24 @@ builder.Services.AddScoped<IDishMapper, DishMapper>();
 builder.Services.AddScoped<IDishValidator, DishValidator>();
 builder.Services.AddScoped<ICategoryMapper, CategoryMapper>();
 
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Restaurante API",
+        Description = "API para la gestión de platos en un restaurante",
+        Contact = new OpenApiContact
+        {
+            Name = "Contact Restaurant  API Support",
+            Url = new Uri("https://example.com/contact")
+        }
+    });
+    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    options.IncludeXmlComments(xmlPath);
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -41,6 +60,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<Infrastructure.Middleware.ExceptionHandlingMiddleware>();
 
 app.MapControllers();
 
