@@ -10,14 +10,13 @@ namespace Application.DataTransfers.Response
     public class DishResponse
     {
         public Guid ID { get; set; }
-        public string DishName { get; set; }
-        public string DishDescription { get; set; }
-        public decimal DishPrice { get; set; }
-        public bool DishIsAvailable { get; set; }
-        public string DishImageURL { get; set; }
-        public CategoryResponse category { get; set; }
-        public DateTime DishCreatedDate { get; set; }
-        public DateTime DishUpdatedDate { get; set; }
-
+        public string name { get; set; }
+        public string Description { get; set; }
+        public decimal Price { get; set; }
+        public bool IsActive { get; set; }
+        public string Image { get; set; }
+        public GenericResponse category { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }

@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Interfaces
+namespace Application.Interfaces.DishInterfaces
 {
     public interface IDishMapper
     {
-        Dish ToEntity(DishRequest request, Category category);
+        Dish ToEntity(DishRequest request);
         DishResponse ToResponse(Dish dish);
     }
 }

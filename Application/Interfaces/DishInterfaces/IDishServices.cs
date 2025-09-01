@@ -7,13 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Interfaces
+namespace Application.Interfaces.DishInterfaces
 {
     public interface IDishServices
     {
-        Task<DishResponse> CreateDish(DishRequest request, int category);
+        Task<DishResponse> CreateDish(DishRequest request);
         Task DeleteDish(int id);
-        Task<ICollection<DishResponse>> GetAllDish();
+        Task<ICollection<DishResponse>> GetAllDish(
+            string? name = null,
+            int? categoryId = null,
+            bool onlyActive = true,
+            string? sortByPrice = null
+        );
         Task<Dish> GetDishById(int id);
         Task<DishResponse> UpdateDish(Guid id, DishRequest request);
 

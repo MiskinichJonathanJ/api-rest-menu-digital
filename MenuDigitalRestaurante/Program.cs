@@ -1,6 +1,8 @@
-using Application.Interfaces;
+using Application.Interfaces.CategoryInterfaces;
+using Application.Interfaces.DishInterfaces;
 using Application.Mappers;
 using Application.UseCase.DishUse;
+using Application.Validations;
 using Infrastructure.Command;
 using Infrastructure.Persistence;
 using Infrastructure.Querys;
@@ -24,6 +26,8 @@ builder.Services.AddScoped<IDishServices, DishServices>();
 builder.Services.AddScoped<IDishCommand, DishCommand>();
 builder.Services.AddScoped<IDishQuery, DishQuery>();
 builder.Services.AddScoped<IDishMapper, DishMapper>();
+builder.Services.AddScoped<IDishValidator, DishValidator>();
+builder.Services.AddScoped<ICategoryMapper, CategoryMapper>();
 
 var app = builder.Build();
 

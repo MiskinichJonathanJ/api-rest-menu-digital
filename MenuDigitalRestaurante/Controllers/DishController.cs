@@ -1,5 +1,5 @@
 ﻿using Application.DataTransfers.Request;
-using Application.Interfaces;
+using Application.Interfaces.DishInterfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,25 +22,29 @@ namespace MenuDigitalRestaurante.Controllers
         /// <param name="request">Datos del plato crear</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateDish(DishRequest request)
+        public async Task<IActionResult> CreateDish([FromBody] DishRequest request)
         {
-            var result = await _services.CreateDish(request, request.CategoryId);
+            var result = await _services.CreateDish(request);
             return new JsonResult(result);
         }
 
         [HttpGet]
-        public  async Task<IActionResult>  GetAll()
+        public  async Task<IActionResult>  GetAll(
+            [FromQuery] string? name,
+            [FromQuery] int? category,
+            [FromQuery] bool onlyActive = true,
+            [FromQuery] string? sortByPrice = null
+        )
         {
-            var result = await _services.GetAllDish();
+            var result = await _services.GetAllDish(name, category, onlyActive, sortByPrice);
             return Ok(result);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateDish(Guid id, DishRequest request)
+        public async Task<IActionResult> UpdateDish(Guid id,[FromBody] DishRequest request)
         {
             var result = await _services.UpdateDish(id, request);
             return Ok(result);
         }
-
     }
 }

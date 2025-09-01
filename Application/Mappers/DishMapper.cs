@@ -1,28 +1,27 @@
 ﻿using Application.DataTransfers.Response;
 using Application.DataTransfers.Request;
-using Application.Interfaces;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Interfaces.DishInterfaces;
 
 namespace Application.Mappers
 {
     public class DishMapper : IDishMapper
     {
-        public Dish ToEntity(DishRequest request, Category category)
+        public Dish ToEntity(DishRequest request)
         {
             var dish = new Dish
             {
-                Name = request.DishName,
-                Description = request.DishDescription,
-                Price = request.DishPrice,
+                Name = request.Name,
+                Description = request.Description,
+                Price = request.Price,
                 IsAvailable = true,
-                ImageURL = request.ImageUrl,
-                CategoryId = category.Id,
-                CategoryNav = category,
+                ImageURL = request.Image,
+                CategoryId = request.Category,
                 CreatedDate = DateTime.UtcNow,
                 UpdatedDate = DateTime.UtcNow
             };
@@ -34,20 +33,20 @@ namespace Application.Mappers
             var dishResponse = new DishResponse
             {
                 ID = dish.ID,
-                DishName = dish.Name,
-                DishDescription = dish.Description,
-                DishPrice = dish.Price,
-                DishIsAvailable = dish.IsAvailable,
-                DishImageURL = dish.ImageURL,
-                DishCreatedDate = dish.CreatedDate,
-                DishUpdatedDate = dish.UpdatedDate,
-                category = new CategoryResponse
+                name = dish.Name,
+                Description = dish.Description,
+                Price = dish.Price,
+                IsActive = dish.IsAvailable,
+                Image = dish.ImageURL,
+                CreatedAt = dish.CreatedDate,
+                UpdatedAt = dish.UpdatedDate,
+                category = new GenericResponse
                 {
-                    CategoryId = dish.CategoryNav.Id,
-                    CategoryName = dish.CategoryNav.Name
+                    id = dish.CategoryId,
+                    name = dish.CategoryNav.Name
                 }
             };
-
+            Console.WriteLine(dish);
             return dishResponse;
         }
     }
