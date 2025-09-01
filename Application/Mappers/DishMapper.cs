@@ -16,12 +16,12 @@ namespace Application.Mappers
         {
             var dish = new Dish
             {
-                Name = request.DishName,
-                Description = request.DishDescription,
-                Price = request.DishPrice,
+                Name = request.Name,
+                Description = request.Description,
+                Price = request.Price,
                 IsAvailable = true,
-                ImageURL = request.ImageUrl,
-                CategoryId = request.CategoryId,
+                ImageURL = request.Image,
+                CategoryId = request.Category,
                 CreatedDate = DateTime.UtcNow,
                 UpdatedDate = DateTime.UtcNow
             };
@@ -33,20 +33,20 @@ namespace Application.Mappers
             var dishResponse = new DishResponse
             {
                 ID = dish.ID,
-                DishName = dish.Name,
-                DishDescription = dish.Description,
-                DishPrice = dish.Price,
-                DishIsAvailable = dish.IsAvailable,
-                DishImageURL = dish.ImageURL,
-                DishCreatedDate = dish.CreatedDate,
-                DishUpdatedDate = dish.UpdatedDate,
+                name = dish.Name,
+                Description = dish.Description,
+                Price = dish.Price,
+                IsActive = dish.IsAvailable,
+                Image = dish.ImageURL,
+                CreatedAt = dish.CreatedDate,
+                UpdatedAt = dish.UpdatedDate,
                 category = new GenericResponse
                 {
                     id = dish.CategoryId,
                     name = dish.CategoryNav.Name
                 }
             };
-
+            Console.WriteLine(dish);
             return dishResponse;
         }
     }

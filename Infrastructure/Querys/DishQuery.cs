@@ -28,7 +28,7 @@ namespace Infrastructure.Querys
             IQueryable<Dish> query = _context.Dishes.Include(d =>  d.CategoryNav);
             
             if (!string.IsNullOrEmpty(name))
-                query = query.Where(d => d.Name.Contains(name));
+                query = query.Where(d => d.Name.Equals(name));
             
             if(categoryId.HasValue)
                 query = query.Where(d => d.CategoryId == categoryId);

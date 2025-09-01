@@ -18,23 +18,23 @@ namespace Infrastructure.Middleware
         {
             _next = next;
         }
-      
-    public async Task Invoke(HttpContext context)
-    {
-        try
+        /*
+        public async Task Invoke(HttpContext context)
         {
-            await _next(context);
+            try
+            {
+                await _next(context);
+            }
+            catch (Exception ex)
+            {
+                await HandleExceptionAsync(context, ex);
+            }
         }
-        catch (Exception ex)
-        {
-            await HandleExceptionAsync(context, ex);
-        }
-    }
 
-    private static Task HandleExceptionAsync(HttpContext context, Exception ex)
-    {
-        var result = new { message = ex.Message };
-        return  context.Response.WriteAsJsonAsync(result);
-    }
+        private static Task HandleExceptionAsync(HttpContext context, Exception ex)
+        {
+            var result = new { message = ex.Message };
+            return  context.Response.WriteAsJsonAsync(result);
+        }*/
     }
 }
